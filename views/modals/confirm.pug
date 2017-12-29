@@ -1,0 +1,12 @@
+mixin confirm(id, title, text)
+  div(id=id).modal.modal-sm
+    a(href="#" aria-label="Close").modal-overlay
+    div(role="document").modal-container
+      div.modal-header
+        div.modal-title.h5= title
+      div.modal-body
+        div.content= text
+      div.modal-footer
+        div.btn-group.btn-group-block
+          button.btn.btn-error Confirm
+          button(aria-label="Close").btn Cancel

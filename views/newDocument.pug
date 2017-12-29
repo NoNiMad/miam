@@ -1,0 +1,28 @@
+extends layout.pug
+
+block append scripts
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ace.js"
+    integrity="sha256-U//RSeH3TR3773Rk+1lAufJnRjEaG5LcdbvGV72kHEM="
+    crossorigin="anonymous")
+  script(src='/scripts/newDocument.js')
+  script.
+    miam.db = '#{db}'
+    miam.col = '#{col}'
+
+block ariane
+  li.breadcrumb-item
+    a(href=`/view/${db}`)= `Database: ${db}`
+  li.breadcrumb-item
+    a(href=`/view/${db}/${col}`)= `Collection: ${col}`
+  li.breadcrumb-item New Document
+
+block content
+  div.btn-group.btn-group-block
+    button.btn.btn-success
+      i.icon.icon-check
+      |  Save
+    a(href=`/view/${db}/${col}`).btn.btn-primary
+      i.icon.icon-cross
+      |  Cancel
+  br
+  div(style='height: 600px')#editor.form-input

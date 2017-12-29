@@ -1,0 +1,15 @@
+mixin largeTextInput(id, title, placeholder)
+  div(id=id).modal.modal-lg
+    a(href="#" aria-label="Close").modal-overlay
+    div(role="document").modal-container
+      div.modal-header
+        a(href="#" aria-label="Close").btn.btn-clear.float-right
+        div.modal-title.h5= title
+      div.modal-body
+        div.content
+          form
+            div.form-group
+              textarea(placeholder=placeholder rows=14).form-input
+      div.modal-footer
+        button.btn.btn-primary Submit
+        button(aria-label="Close").btn.btn-link Close

@@ -1,0 +1,39 @@
+extends layout.pug
+
+include modals/largeTextInput
+include modals/confirm
+
+block append scripts
+  script(src="/scripts/listDocuments.js")
+  script.
+    miam.db = '#{db}'
+    miam.col = '#{col}'
+
+block ariane
+  li.breadcrumb-item
+    a(href=`/view/${db}`)= `Database: ${db}`
+  li.breadcrumb-item
+    a(href=`/view/${db}/${col}`)= `Collection: ${col}`
+
+block content
+  a(href=`/view/${db}/${col}/new`).btn.btn-primary.float-right New Document
+  table.table.table-striped.table-hover
+    thead
+      tr
+        th ID
+        th Value Preview
+        th.column-sm Actions
+    tbody
+      each doc in documents
+        tr(data-doc=doc._id)
+          td= doc._id
+          td= JSON.stringify(doc)
+          td.column-sm.btn-group.btn-group-block
+            a(href=`/view/${db}/${col}/${doc._id}` data-tooltip='Edit').btn.btn-primary.tooltip
+              i.icon.icon-edit
+            button(data-tooltip='Duplicate').duplicate.btn.btn-primary.tooltip
+              i.icon.icon-plus
+            button(data-modal='modDelete' data-tooltip='Delete').btn.btn-error.tooltip
+              i.icon.icon-delete
+  +largeTextInput('modEdit', 'Edit Document', '')
+  +confirm('modDelete', 'Delete Document', 'Are you sure?')

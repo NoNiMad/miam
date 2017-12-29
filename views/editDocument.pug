@@ -1,0 +1,37 @@
+extends layout.pug
+
+include modals/confirm
+
+block append scripts
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ace.js"
+    integrity="sha256-U//RSeH3TR3773Rk+1lAufJnRjEaG5LcdbvGV72kHEM="
+    crossorigin="anonymous")
+  script(src='/scripts/editDocument.js')
+  script.
+    miam.db = '#{db}'
+    miam.col = '#{col}'
+    miam.id  = '#{doc._id}'
+    miam.doc = JSON.parse('!{JSON.stringify(doc)}')
+
+block ariane
+  li.breadcrumb-item
+    a(href=`/view/${db}`)= `Database: ${db}`
+  li.breadcrumb-item
+    a(href=`/view/${db}/${col}`)= `Collection: ${col}`
+  li.breadcrumb-item
+    a(href=`/view/${db}/${col}/${doc._id}`)= `Document: ${doc._id}`
+
+block content
+  div.btn-group.btn-group-block
+    button.btn.btn-success
+      i.icon.icon-check
+      |  Save
+    a(href=`/view/${db}/${col}`).btn.btn-primary
+      i.icon.icon-cross
+      |  Cancel
+    button(data-modal='modDelete').btn.btn-error
+      i.icon.icon-delete
+      |  Delete
+  br
+  div(style='height: 600px')#editor.form-input
+  +confirm('modDelete', 'Delete Document', 'Are you sure?')

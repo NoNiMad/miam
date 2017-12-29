@@ -1,0 +1,20 @@
+#header {
+  margin: 20px 0;
+}
+
+#footer {
+  margin: 20px 0;
+  text-align: center;
+}
+
+#toastArea {
+  margin: 20px 0;
+}
+
+.toast {
+  text-align: center;
+}
+
+.column-sm {
+  width: 200px;
+}

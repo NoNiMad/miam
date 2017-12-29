@@ -1,0 +1,15 @@
+mixin confirm(prompt)
+  div.modal.modal-sm
+    a(href="#close" aria-label="Close").modal-overlay
+    div.modal-container= prompt
+
+mixin editString
+  div#modal-id.modal.active
+    a(href="#close" aria-label="Close").modal-overlay
+    div.modal-container
+      div.modal-header
+        a(href="#close" aria-label="Close").btn.btn-clear.float-right
+        div.modal-title.h5 Modal title
+      div.modal-body
+        div.content Content
+      div.modal-footer Footer

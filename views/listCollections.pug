@@ -1,0 +1,45 @@
+extends layout.pug
+
+include modals/tinyTextInput
+include modals/confirm
+
+block append scripts
+  script(src="/scripts/listCollections.js")
+  script miam.db = '#{db}'
+
+block ariane
+  li.breadcrumb-item
+    a(href=`/view/${db}`)= `Database: ${db}`
+
+block content
+  form(method="POST" action="/api/create").input-group.float-right
+    input(type="hidden" name="_csrf" value=csrf)
+    input(type="hidden" name="type" value="collection")
+    input(type="hidden" name="db" value=db)
+    input(type="text" name="col" placeholder="Name").form-input
+    input(type="submit" value="New Collection").btn.btn-primary.input-group-btn
+  table.table.table-striped.table-hover
+    thead
+      tr
+        th Name
+        th Type
+        th Read-Only
+        th.column-sm Actions
+    tbody
+      each col in collections
+        tr(data-col=col.name)
+          td
+            a(href=`/view/${db}/${col.name}`)= col.name
+          td= col.type
+          td
+            if col.info.readOnly
+              i.icon.icon-check
+            else
+              i.icon.icon-cross
+          td.column-sm.btn-group.btn-group-block
+            button(data-modal='modRename' data-tooltip='Rename').btn.btn-primary.tooltip
+              i.icon.icon-edit
+            button(data-modal='modDelete' data-tooltip='Drop').btn.btn-error.tooltip
+              i.icon.icon-delete
+  +tinyTextInput('modRename', 'Rename Collection', 'New name')
+  +confirm('modDelete', 'Delete Collection', 'Are you sure?')

@@ -1,0 +1,33 @@
+extends layout.pug
+
+include modals/confirm
+
+block append scripts
+  script(src="/scripts/listDatabases.js")
+
+block content
+  div#newDatabase.input-group.float-right
+    input(type="text" name="db" placeholder="Name").form-input
+    button.btn.btn-primary.input-group-btn New Database
+  table#c.table.table-striped.table-hover
+    thead
+      tr
+        th Name
+        th Size
+        th Empty
+        th.column-sm Actions
+    tbody
+      each db in databases
+        tr(data-db=db.name)
+          td
+            a(href=`/view/${db.name}`)= db.name
+          td= db.sizeOnDisk
+          td
+            if db.empty
+              i.icon.icon-check
+            else
+              i.icon.icon-cross
+          td.column-sm.btn-group.btn-group-block
+            button(data-modal='modDelete' data-tooltip='Drop').btn.btn-error.tooltip
+              i.icon.icon-delete
+  +confirm('modDelete', 'Delete Database', 'Are you sure?')
